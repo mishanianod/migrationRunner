@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git Repo Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .log {
+        height: 200px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Migration Runner</h1>
+    <button onclick="enableStickToBottom()">Enable Stick to Bottom</button>
+    <button onclick="disableStickToBottom()">Disable Stick to Bottom</button>
+    <button onclick="toggleAutoUpdateLogs()">Toggle Auto Update Logs</button>
+    <button onclick="updateStatus()">Update Status</button>
+    <button onclick="updateLogs()">Update Logs</button>
+    <span> Last logs fetch:<span id="last-updated"></span> </span>
+
+    <h2>Node Repo - Status: <span id="node-status"></span></h2>
+    <pre id="node-log" class="log"></pre>
+    <button onclick="runCommand('node')">Run</button>
+    <button onclick="terminateCommand('node')">Terminate</button>
+    <button onclick="window.location.href='/env'">
+      Manage Environment Variables
+    </button>
+    <button onclick="pullChanges('node')">Pull Changes</button>
+    <button onclick="clearLogs('node')">Clear Logs</button>
+    <a href="/download/node" download>Download Node Logs</a>
+
+    <h2>Python Repo - Status: <span id="python-status"></span></h2>
+    <pre id="python-log" class="log"></pre>
+    <button onclick="runCommand('python')">Run</button>
+    <button onclick="terminateCommand('python')">Terminate</button>
+    <button onclick="window.location.href='/env'">
+      Manage Environment Variables
+    </button>
+    <button onclick="pullChanges('python')">Pull Changes</button>
+    <button onclick="clearLogs('python')">Clear Logs</button>
+    <button onclick="window.location.href='/companies'">companies.json</button>
+    <button onclick="window.location.href='/config'">config.json</button>
+    <a href="/download/python" download>Download Python Logs</a>
+
+    <script>
+      let autoUpdateLogs = true;
+
+      function toggleAutoUpdateLogs() {
+        autoUpdateLogs = !autoUpdateLogs;
+      }
+
+      function updateLogs() {
+        if (!autoUpdateLogs) {
+          return;
+        }
+
+        $.get("/logs/node", function (data) {
+          $("#node-log").text(data);
+          // $("#node-log").scrollTop($("#node-log")[0].scrollHeight);
+        });
+        $.get("/logs/python", function (data) {
+          $("#python-log").text(data);
+          // $("#python-log").scrollTop($("#python-log")[0].scrollHeight);
+        });
+        $("#last-updated").text(new Date().toLocaleTimeString());
+      }
+
+      function updateStatus() {
+        $.get("/status", function (data) {
+          $("#node-status").text(data.node);
+          $("#python-status").text(data.python);
+        });
+      }
+
+      function runCommand(repo) {
+        $.post("/run/" + repo, function (data) {
+          alert(JSON.stringify(data, null, 2));
+        });
+      }
+
+      function terminateCommand(repo) {
+        $.post("/terminate/" + repo, function (data) {
+          alert(JSON.stringify(data, null, 2));
+        });
+      }
+
+      function pullChanges(repo) {
+        $.post("/pull/" + repo, function (data) {
+          alert(JSON.stringify(data, null, 2));
+        });
+      }
+
+      function clearLogs(repo) {
+        $.post("/clear/" + repo, function (data) {
+          alert(JSON.stringify(data, null, 2));
+        });
+      }
+
+      let stickToBottom = true;
+      function enableStickToBottom() {
+        stickToBottom = true;
+      }
+      function disableStickToBottom() {
+        stickToBottom = false;
+      }
+
+      setInterval(() => {
+        if (stickToBottom) {
+          $("#node-log").scrollTop($("#node-log")[0].scrollHeight);
+          $("#python-log").scrollTop($("#python-log")[0].scrollHeight);
+        }
+      }, 100);
+    </script>
+  </body>
+</html>

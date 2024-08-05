@@ -1,0 +1,54 @@
+services:
+  ftp-server:
+    environment:
+      - FTP_PASS=123
+      - FTP_USER=user
+    image: garethflowers/ftp-server
+    ports:
+      - "20-21:20-21/tcp"
+      - "40000-40009:40000-40009/tcp" # Only needed for passive mode
+    volumes:
+      - "./dbf:/home/user"
+    restart: always
+  first:
+    image: migrator
+    ports:
+      - 5001:5000
+    env_file:
+      - .env
+    volumes:
+      - "./dbf:/dbf"
+      - "./backup_repo:/backup_repo"
+      - "./companies1.json:/app/companies.json"
+      - "./config1.json:/app/config.json"
+      - "./node_log1.txt:/app/node_log.txt"
+      - "./python_log1.txt:/app/python_log.txt"
+    restart: always
+  second:
+    image: migrator
+    ports:
+      - 5002:5000
+    env_file:
+      - .env
+    volumes:
+      - "./dbf:/dbf"
+      - "./backup_repo:/backup_repo"
+      - "./companies2.json:/app/companies.json"
+      - "./config2.json:/app/config.json"
+      - "./node_log2.txt:/app/node_log.txt"
+      - "./python_log2.txt:/app/python_log.txt"
+    restart: always
+  third:
+    image: migrator
+    ports:
+      - 5003:5000
+    env_file:
+      - .env
+    volumes:
+      - "./dbf:/dbf"
+      - "./backup_repo:/backup_repo"
+      - "./companies3.json:/app/companies.json"
+      - "./config3.json:/app/config.json"
+      - "./node_log3.txt:/app/node_log.txt"
+      - "./python_log3.txt:/app/python_log.txt"
+    restart: always

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manage Config</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      textarea {
+        width: 100%;
+        height: 200px;
+      }
+    </style>
+    <script src=" https://cdn.jsdelivr.net/npm/jsoneditor@10.1.0/dist/jsoneditor.min.js "></script>
+    <link
+      href=" https://cdn.jsdelivr.net/npm/jsoneditor@10.1.0/dist/jsoneditor.min.css "
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Manage Config JSON file</h1>
+
+    <div id="jsoneditor" style="width: 80vw; height: 70vh"></div>
+    <button onclick="saveJson()">Save</button>
+    <a href="/">Back To Home</a>
+
+    <script>
+      const container = document.getElementById("jsoneditor");
+      const options = {
+        mode: "code",
+      };
+      const editor = new JSONEditor(container, options);
+
+      // Set initial JSON if needed
+      const initialJson = {};
+
+      $.get("/config_json", function (data) {
+        editor.set(JSON.parse(data));
+      });
+
+      editor.set(initialJson);
+
+      function saveJson() {
+        // var content = $("#" + repo + "-env").val();
+        var content = editor.getText();
+        console.log({ content });
+        $.post("/config_json", { config: content }, function (response) {
+          alert(response.status);
+        });
+      }
+    </script>
+  </body>
+</html>
