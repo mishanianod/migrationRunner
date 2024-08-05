@@ -16,3 +16,17 @@ docker compose up -d
 # Open http://webapp:5001 http://webapp:5002 http://webapp:5003
 
 ```
+## Development
+
+```
+git clone git@github.com:mishanianod/migrationRunner.git
+
+python -m venv venv
+
+sournce ./venv/bin/activate
+
+pip install -r requirements.txt
+
+python main.py
+
+```
