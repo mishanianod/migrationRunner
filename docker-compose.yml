@@ -11,7 +11,7 @@ services:
       - "./dbf:/home/user"
     restart: always
   first:
-    image: migrator
+    image: ghcr.io/mishanianod/migration-runner
     ports:
       - 5001:5000
     env_file:
