@@ -101,6 +101,8 @@
         $.post("/clear/" + repo, function (data) {
           alert(JSON.stringify(data, null, 2));
         });
+        updateStatus();
+        updateLogs();
       }
 
       let stickToBottom = true;
