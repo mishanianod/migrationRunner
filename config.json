@@ -1,3 +1,19 @@
 {
-  "isDelete": true
+  "is_take_dump_json": false,
+  "is_run_test": false,
+  "is_special_load_only": false,
+  "FULL_DELETE_DATABASES": false,
+  "is_create_encryption_collection": false,
+  "is_delete_s3_bucket": false,
+  "is_load_scripts": false,
+  "shall_delete_record": true,
+  "is_payroll": true,
+  "is_time_module": true,
+  "is_load_documents": true,
+  "is_create_organization_tree": true,
+  "is_take_dump": false,
+  "is_load_employee_pay_items": true,
+  "is_empty_collection": true,
+  "is_add_notification_templates": true,
+  "is_change_password_of_admins": true
 }

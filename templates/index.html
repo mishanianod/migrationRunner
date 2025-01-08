@@ -29,9 +29,7 @@
     <pre id="node-log" class="log"></pre>
     <button onclick="runCommand('node')">Run</button>
     <button onclick="terminateCommand('node')">Terminate</button>
-    <button onclick="window.location.href='/env'">
-      Manage Environment Variables
-    </button>
+    <button onclick="window.location.href='/env'">Manage Environment Variables</button>
     <button onclick="pullChanges('node')">Pull Changes</button>
     <button onclick="clearLogs('node')">Clear Logs</button>
     <a href="/download/node" download>Download Node Logs</a>
@@ -40,9 +38,7 @@
     <pre id="python-log" class="log"></pre>
     <button onclick="runCommand('python')">Run</button>
     <button onclick="terminateCommand('python')">Terminate</button>
-    <button onclick="window.location.href='/env'">
-      Manage Environment Variables
-    </button>
+    <button onclick="window.location.href='/env'">Manage Environment Variables</button>
     <button onclick="pullChanges('python')">Pull Changes</button>
     <button onclick="clearLogs('python')">Clear Logs</button>
     <button onclick="window.location.href='/companies'">companies.json</button>
@@ -61,44 +57,44 @@
           return;
         }
 
-        $.get("/logs/node", function (data) {
-          $("#node-log").text(data);
+        $.get('/logs/node', function (data) {
+          $('#node-log').text(data);
           // $("#node-log").scrollTop($("#node-log")[0].scrollHeight);
         });
-        $.get("/logs/python", function (data) {
-          $("#python-log").text(data);
+        $.get('/logs/python', function (data) {
+          $('#python-log').text(data);
           // $("#python-log").scrollTop($("#python-log")[0].scrollHeight);
         });
-        $("#last-updated").text(new Date().toLocaleTimeString());
+        $('#last-updated').text(new Date().toLocaleTimeString());
       }
 
       function updateStatus() {
-        $.get("/status", function (data) {
-          $("#node-status").text(data.node);
-          $("#python-status").text(data.python);
+        $.get('/status', function (data) {
+          $('#node-status').text(data.node);
+          $('#python-status').text(data.python);
         });
       }
 
       function runCommand(repo) {
-        $.post("/run/" + repo, function (data) {
+        $.post('/run/' + repo, function (data) {
           alert(JSON.stringify(data, null, 2));
         });
       }
 
       function terminateCommand(repo) {
-        $.post("/terminate/" + repo, function (data) {
+        $.post('/terminate/' + repo, function (data) {
           alert(JSON.stringify(data, null, 2));
         });
       }
 
       function pullChanges(repo) {
-        $.post("/pull/" + repo, function (data) {
+        $.post('/pull/' + repo, function (data) {
           alert(JSON.stringify(data, null, 2));
         });
       }
 
       function clearLogs(repo) {
-        $.post("/clear/" + repo, function (data) {
+        $.post('/clear/' + repo, function (data) {
           alert(JSON.stringify(data, null, 2));
         });
         updateStatus();
@@ -115,10 +111,10 @@
 
       setInterval(() => {
         if (stickToBottom) {
-          $("#node-log").scrollTop($("#node-log")[0].scrollHeight);
-          $("#python-log").scrollTop($("#python-log")[0].scrollHeight);
+          $('#node-log').scrollTop($('#node-log')[0].scrollHeight);
+          $('#python-log').scrollTop($('#python-log')[0].scrollHeight);
         }
-      }, 100);
+      }, 1000);
     </script>
   </body>
 </html>
