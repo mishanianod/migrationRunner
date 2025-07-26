@@ -1,4 +1,6 @@
-FROM nikolaik/python-nodejs
+# FROM nikolaik/python-nodejs
+FROM nikolaik/python-nodejs:python3.10-nodejs20
+
 
 WORKDIR /app
 
