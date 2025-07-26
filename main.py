@@ -8,8 +8,8 @@ import git
 GIT_PASSWORD = os.environ.get('GIT_PASSWORD')
 
 # Configuration
-node_repo_url = f"https://asaedi:{GIT_PASSWORD}@bitbucket.org/employeeportal/backend.git"
-python_repo_url = f"https://asaedi:{GIT_PASSWORD}@bitbucket.org/employeeportal/migration-scripts.git"
+node_repo_url = f"https://mishanianod:{GIT_PASSWORD}@bitbucket.org/employeeportal/backend.git"
+python_repo_url = f"https://mishanianod:{GIT_PASSWORD}@bitbucket.org/employeeportal/migration-scripts.git"
 
 node_repo_dir = "/node_repo"
 python_repo_dir = "/python_repo"
@@ -77,7 +77,7 @@ def download(repo):
         return send_file(log_file, as_attachment=True)
     else:
         return jsonify({"status": "Log file not found"})
-    
+
 
 @app.route('/run/<repo>', methods=['POST'])
 def run(repo):
